@@ -60,3 +60,11 @@
 .movie-detail-container{
   max-width: 800px;
 }
+
+.add-movie-form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-content: center;
+}

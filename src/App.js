@@ -86,6 +86,9 @@ const INTIAL_MOVIE_LIST = [
 ];
 
 function App() {
+// Lifting the state up - APP (common parent)
+  const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
+
   return (
     <div className="App">
       <nav>
@@ -107,9 +110,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="movies" element={<MovieList />} />
+        <Route path="movies" element={<MovieList movieList={movieList} setMovieList={setMovieList} />} />
         <Route path="/films" element={<Navigate replace to="/movies" />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
+        <Route path="/movies/:id" element={<MovieDetails movieList={movieList} />} />
         <Route path="/addmovie" element={<AddMovie />} />
         <Route path="/404" element={<NotFound />} />
         {/* /sdgsdgfhgs --> /404 */}
@@ -127,26 +130,39 @@ function NotFound() {
         className='not-found' />
     </div>
   )
-}
+};
 
 function AddMovie() {
+  // const movieList = INTIAL_MOVIE_LIST;
+  const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
+
+  const [name, setName] = useState("");
+  const [poster, setPoster] = useState("");
+  const [rating, setRating] = useState("");
+  const [summary, setSummary] = useState("");
+  const [trailer, setTrailer] = useState("");
+
 
   return (
     <div className='inputbox'>
-      <input type="text" placeholder='Name' />
+      <input onChange={(event) => setName(event.target.value)} type="text" placeholder='Name' />
 
-      <input type="url" placeholder='Poster' />
+      <input onChange={(event) => setPoster(event.target.value)} type="text" placeholder='Poster' />
 
-      <input type="number" placeholder='Rating' />
+      <input onChange={(event) => setRating(event.target.value)} type="text" placeholder='Rating' />
 
-      <input type="text" placeholder='Summary' />
+      <input onChange={(event) => setSummary(event.target.value)} type="text" placeholder='Summary' />
 
-      <input type="url" placeholder='Trailer' />
+      <input onChange={(event) => setTrailer(event.target.value)} type="text" placeholder='Trailer' />
 
 
-      <button>Add Movie</button>
+      <button onClick={() => {
+        const newMovie = { name, poster, rating, summary, trailer };
+        setMovieList([...movieList, newMovie]);
+      }
+      }>Add Movie</button>
 
-    </div>
+    </div >
   )
 }
 
@@ -154,13 +170,36 @@ function Home() {
   return <h1>Welcome to the Movie App🎊🎊</h1>
 }
 
-function MovieList() {
-  const movieList = INTIAL_MOVIE_LIST;
+function MovieList({movieList, setMovieList}) {
+  // const movieList = INTIAL_MOVIE_LIST;
+
+  const [name, setName] = useState("");
+  const [poster, setPoster] = useState("");
+  const [rating, setRating] = useState("");
+  const [summary, setSummary] = useState("");
+  const [trailer, setTrailer] = useState("");
+
+  const addMovie = ()=>{
+    const newMovie = {name, poster, rating, summary, trailer};
+    setMovieList([...movieList, newMovie]);
+  }
+
   return (
-    <div className='movie-list'>
-      {movieList.map((mv, index) => (
-        <Movie key={index} movie={mv} id={index} />
-      ))}
+    <div>
+      <div className='add-movie-form'>
+        <input onChange={(event)=> setName(event.target.value)} type="text" placeholder='Name' />
+        <input onChange={(event)=> setPoster(event.target.value)} type="text" placeholder='Poster' />
+        <input onChange={(event)=> setRating(event.target.value)} type="text" placeholder='Rating' />
+        <input onChange={(event)=> setSummary(event.target.value)} type="text" placeholder='Summary' />
+        <input onChange={(event)=> setTrailer(event.target.value)} type="text" placeholder='Trailer' />
+        <button onClick={addMovie}>Add Movie</button>
+      </div>
+
+      <div className='movie-list'>
+        {movieList.map((mv, index) => (
+          <Movie key={index} movie={mv} id={index} />
+        ))}
+      </div>
     </div>
   )
 }
@@ -198,9 +237,9 @@ function Movie({ movie, id }) {
   );
 }
 
-function MovieDetails() {
+function MovieDetails({movieList}) {
   const { id } = useParams()
-  const movie = INTIAL_MOVIE_LIST[id];
+  const movie = movieList[id];
   const navigate = useNavigate();
   // console.log(movie);
 
