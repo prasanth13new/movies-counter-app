@@ -3,6 +3,9 @@ import './App.css';
 import { Counter } from './Counter';
 import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, useParams, Navigate } from "react-router-dom";
+import { Button, TextField } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 const INTIAL_MOVIE_LIST = [
   {
@@ -187,12 +190,13 @@ function MovieList({movieList, setMovieList}) {
   return (
     <div>
       <div className='add-movie-form'>
-        <input onChange={(event)=> setName(event.target.value)} type="text" placeholder='Name' />
-        <input onChange={(event)=> setPoster(event.target.value)} type="text" placeholder='Poster' />
-        <input onChange={(event)=> setRating(event.target.value)} type="text" placeholder='Rating' />
-        <input onChange={(event)=> setSummary(event.target.value)} type="text" placeholder='Summary' />
-        <input onChange={(event)=> setTrailer(event.target.value)} type="text" placeholder='Trailer' />
-        <button onClick={addMovie}>Add Movie</button>
+        <TextField onChange={(event)=> setName(event.target.value)} label="Name" variant="outlined" />
+        <TextField onChange={(event)=> setPoster(event.target.value)} label="Poster" variant="outlined" />
+        <TextField onChange={(event)=> setRating(event.target.value)} label="Rating" variant="outlined" />
+        <TextField onChange={(event)=> setSummary(event.target.value)} label="Summary" variant="outlined" />
+        <TextField onChange={(event)=> setTrailer(event.target.value)} label="Trailer" variant="outlined" />
+
+        <Button onClick={addMovie} variant="outlined">Add Movie</Button>
       </div>
 
       <div className='movie-list'>
@@ -265,7 +269,7 @@ function MovieDetails({movieList}) {
           <p style={styles} className='movie-rating'>⭐ {movie.rating}</p>
         </div>
         <p>{movie.summary}</p>
-        <button onClick={() => navigate(-1)}> ← Back</button>
+        <Button startIcon={<ArrowBackIosIcon />} onClick={() => navigate(-1)} variant="outlined">Back</Button>
         {/* <h1>
         Here is the MovieDetails of {movie.name}
         {movie.rating}
