@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import { Counter } from './Counter';
 import { useState } from 'react';
-import { Routes, Route, Link, useNavigate, useParams, Navigate } from "react-router-dom";
-import { Button, TextField } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { NotFound } from './NotFound';
+import { AddMovie } from './AddMovie';
+import { MovieList } from './MovieList';
+import { MovieDetails } from './MovieDetails';
 
 
-const INTIAL_MOVIE_LIST = [
+export const INTIAL_MOVIE_LIST = [
   {
     id: "100",
     name: "RRR",
@@ -125,158 +126,8 @@ function App() {
   );
 }
 
-function NotFound() {
-  return (
-    <div>
-      <img src='https://cdn.dribbble.com/users/1175431/screenshots/6188233/404-error-dribbble-800x600.gif'
-        alt='404 not found'
-        className='not-found' />
-    </div>
-  )
-};
-
-function AddMovie() {
-  // const movieList = INTIAL_MOVIE_LIST;
-  const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
-
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  const [trailer, setTrailer] = useState("");
-
-
-  return (
-    <div className='inputbox'>
-      <input onChange={(event) => setName(event.target.value)} type="text" placeholder='Name' />
-
-      <input onChange={(event) => setPoster(event.target.value)} type="text" placeholder='Poster' />
-
-      <input onChange={(event) => setRating(event.target.value)} type="text" placeholder='Rating' />
-
-      <input onChange={(event) => setSummary(event.target.value)} type="text" placeholder='Summary' />
-
-      <input onChange={(event) => setTrailer(event.target.value)} type="text" placeholder='Trailer' />
-
-
-      <button onClick={() => {
-        const newMovie = { name, poster, rating, summary, trailer };
-        setMovieList([...movieList, newMovie]);
-      }
-      }>Add Movie</button>
-
-    </div >
-  )
-}
-
 function Home() {
   return <h1>Welcome to the Movie App🎊🎊</h1>
-}
-
-function MovieList({movieList, setMovieList}) {
-  // const movieList = INTIAL_MOVIE_LIST;
-
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  const [trailer, setTrailer] = useState("");
-
-  const addMovie = ()=>{
-    const newMovie = {name, poster, rating, summary, trailer};
-    setMovieList([...movieList, newMovie]);
-  }
-
-  return (
-    <div>
-      <div className='add-movie-form'>
-        <TextField onChange={(event)=> setName(event.target.value)} label="Name" variant="outlined" />
-        <TextField onChange={(event)=> setPoster(event.target.value)} label="Poster" variant="outlined" />
-        <TextField onChange={(event)=> setRating(event.target.value)} label="Rating" variant="outlined" />
-        <TextField onChange={(event)=> setSummary(event.target.value)} label="Summary" variant="outlined" />
-        <TextField onChange={(event)=> setTrailer(event.target.value)} label="Trailer" variant="outlined" />
-
-        <Button onClick={addMovie} variant="outlined">Add Movie</Button>
-      </div>
-
-      <div className='movie-list'>
-        {movieList.map((mv, index) => (
-          <Movie key={index} movie={mv} id={index} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function Movie({ movie, id }) {
-  // conditional styling
-  const styles = {
-    color: movie.rating > 8 ? "green" : "red",
-  };
-
-  // useState using boolean
-  const [show, setShow] = useState(true);
-
-  const summaryStyles = {
-    display: show ? "block" : "none",
-  };
-
-  const navigate = useNavigate();
-
-  return (
-    <div className='movie-container'>
-      <img className='movie-poster' src={movie.poster} alt={movie.name} />
-      <div className='movie-specs'>
-        <h2 className="movie-name">{movie.name}</h2>
-        <p style={styles} className='movie-rating'>⭐ {movie.rating}</p>
-      </div>
-      <button onClick={() => navigate("/movies/" + id)}>Info</button>
-      <button onClick={() => setShow(!show)}>Toogle summary</button>
-      {/* <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> */}
-
-      {/* Conditional rendering */}
-      {show ? <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> : ""}
-      <Counter />
-    </div>
-  );
-}
-
-function MovieDetails({movieList}) {
-  const { id } = useParams()
-  const movie = movieList[id];
-  const navigate = useNavigate();
-  // console.log(movie);
-
-  // conditional styling
-  const styles = {
-    color: movie.rating > 8 ? "green" : "red",
-  };
-
-  return (
-    <div>
-      <iframe
-        width="100%"
-        height="570"
-        src={movie.trailer}
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-      ></iframe>
-
-      <div className='movie-detail-container'>
-        <div className='movie-specs'>
-          <h2 className="movie-name">{movie.name}</h2>
-          <p style={styles} className='movie-rating'>⭐ {movie.rating}</p>
-        </div>
-        <p>{movie.summary}</p>
-        <Button startIcon={<ArrowBackIosIcon />} onClick={() => navigate(-1)} variant="outlined">Back</Button>
-        {/* <h1>
-        Here is the MovieDetails of {movie.name}
-        {movie.rating}
-      </h1> */}
-      </div>
-    </div>
-  )
 }
 
 export default App;
