@@ -3,8 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { NotFound } from './NotFound';
-import { AddMovie } from './AddMovie';
-import { MovieList } from './MovieList';
+import { MovieList, AddMovie } from './MovieList';
 import { MovieDetails } from './MovieDetails';
 
 
@@ -107,7 +106,7 @@ function App() {
             <Link to="somewhere">Somewhere</Link>
           </li>
           <li>
-            <Link to="addmovie">ADDMOVIE</Link>
+            <Link to="/movies/add">AddMovie</Link>
           </li>
         </ul>
       </nav>
@@ -117,7 +116,7 @@ function App() {
         <Route path="movies" element={<MovieList movieList={movieList} setMovieList={setMovieList} />} />
         <Route path="/films" element={<Navigate replace to="/movies" />} />
         <Route path="/movies/:id" element={<MovieDetails movieList={movieList} />} />
-        <Route path="/addmovie" element={<AddMovie />} />
+        <Route path="/movies/add" element={<AddMovie movieList={movieList} setMovieList={setMovieList} />} />
         <Route path="/404" element={<NotFound />} />
         {/* /sdgsdgfhgs --> /404 */}
         <Route path="*" element={<Navigate replace to="/404" />} />

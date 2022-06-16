@@ -4,6 +4,17 @@ import { Movie } from "./Movie";
 
 export function MovieList({ movieList, setMovieList }) {
   // const movieList = INTIAL_MOVIE_LIST;
+  return (
+      <div className='movie-list'>
+        {movieList.map((mv, index) => (
+          <Movie key={index} movie={mv} id={index} />
+        ))}
+      </div>
+  );
+}
+
+
+export function AddMovie({ movieList, setMovieList }) {
   const [name, setName] = useState("");
   const [poster, setPoster] = useState("");
   const [rating, setRating] = useState("");
@@ -25,12 +36,6 @@ export function MovieList({ movieList, setMovieList }) {
         <TextField onChange={(event) => setTrailer(event.target.value)} label="Trailer" variant="outlined" />
 
         <Button onClick={addMovie} variant="outlined">Add Movie</Button>
-      </div>
-
-      <div className='movie-list'>
-        {movieList.map((mv, index) => (
-          <Movie key={index} movie={mv} id={index} />
-        ))}
       </div>
     </div>
   );
