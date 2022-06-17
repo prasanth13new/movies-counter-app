@@ -1,10 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import { NotFound } from './NotFound';
 import { MovieList, AddMovie } from './MovieList';
 import { MovieDetails } from './MovieDetails';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 export const INTIAL_MOVIE_LIST = [
@@ -89,12 +96,23 @@ export const INTIAL_MOVIE_LIST = [
 ];
 
 function App() {
-// Lifting the state up - APP (common parent)
+  // Lifting the state up - APP (common parent)
   const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
-
+  const navigate = useNavigate();
+  
   return (
     <div className="App">
-      <nav>
+
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit" onClick={()=> navigate("/")}>Home</Button>
+          <Button color="inherit" onClick={()=> navigate("movies")}>Movies</Button>
+          <Button color="inherit" onClick={()=> navigate("somewhere")}>Somewhere</Button>
+          <Button color="inherit" onClick={()=> navigate("/movies/add")}>AddMovie</Button>
+        </Toolbar>
+      </AppBar>
+
+      {/* <nav>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -109,7 +127,7 @@ function App() {
             <Link to="/movies/add">AddMovie</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
 
       <Routes>
         <Route path="/" element={<Home />} />
