@@ -1,10 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useEffect, useState } from "react";
+import { API } from "./global";
 
-export function MovieDetails({ movieList }) {
+export function MovieDetails() {
   const { id } = useParams();
-  const movie = movieList[id];
+
+  const [movie, setMovie] = useState({});
+  
+  useEffect(() => {
+    fetch(`${API}/movies/${id}`)
+  .then((data)=> data.json())
+  .then((mv)=> setMovie(mv));
+  }, [id]);
+
   const navigate = useNavigate();
   // console.log(movie);
   // conditional styling

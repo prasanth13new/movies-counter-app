@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { Movie } from "./Movie";
+import { API } from './global';
 
-export function MovieList({ movieList, setMovieList }) {
+export function MovieList() {
   // const movieList = INTIAL_MOVIE_LIST;
+  const [movieList, setMovieList] = useState([]);
+  useEffect(() => {
+    fetch(`${API}/movies`)
+  .then((data)=> data.json())
+  .then((movies)=> setMovieList(movies));
+  }, [])
+
   return (
       <div className='movie-list'>
-        {movieList.map((mv, index) => (
-          <Movie key={index} movie={mv} id={index} />
+        {movieList.map((mv) => (
+          <Movie key={mv.id} movie={mv} id={mv.id} />
         ))}
       </div>
   );
