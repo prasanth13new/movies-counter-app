@@ -12,7 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export function Movie({ movie, id }) {
+export function Movie({ movie, id, deleteButton }) {
   // conditional styling
   const styles = {
     color: movie.rating > 8 ? "green" : "red",
@@ -55,7 +55,7 @@ export function Movie({ movie, id }) {
       </CardContent>
       
       <CardActions>
-      <Counter />
+      <Counter /> {deleteButton}
       </CardActions>
     </Card >
   );

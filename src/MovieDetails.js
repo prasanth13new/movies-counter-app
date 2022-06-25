@@ -8,11 +8,11 @@ export function MovieDetails() {
   const { id } = useParams();
 
   const [movie, setMovie] = useState({});
-  
+
   useEffect(() => {
     fetch(`${API}/movies/${id}`)
-  .then((data)=> data.json())
-  .then((mv)=> setMovie(mv));
+      .then((data) => data.json())
+      .then((mv) => setMovie(mv));
   }, [id]);
 
   const navigate = useNavigate();

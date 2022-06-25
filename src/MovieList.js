@@ -5,19 +5,29 @@ import { API } from './global';
 
 export function MovieList() {
   // const movieList = INTIAL_MOVIE_LIST;
+
   const [movieList, setMovieList] = useState([]);
-  useEffect(() => {
-    fetch(`${API}/movies`)
-  .then((data)=> data.json())
-  .then((movies)=> setMovieList(movies));
-  }, [])
+
+  const getMovies = () => {
+    fetch(`${API}/movies`, { method: "GET" })
+      .then((data) => data.json())
+      .then((movies) => setMovieList(movies));
+  };
+
+  useEffect(() => getMovies(), []);
+
+  // Delete --> refresh movie list
+  const deleteMovie = id => {
+    console.log("Deleting movie: ", id);
+    fetch(`${API}/movies/${id}`, { method: "DELETE" }).then(() => getMovies());
+  };
 
   return (
-      <div className='movie-list'>
-        {movieList.map((mv) => (
-          <Movie key={mv.id} movie={mv} id={mv.id} />
-        ))}
-      </div>
+    <div className='movie-list'>
+      {movieList.map((mv) => (
+        <Movie key={mv.id} movie={mv} id={mv.id} deleteButton={<button onClick={() => deleteMovie(mv.id)}>Delete</button>} />
+      ))}
+    </div>
   );
 }
 
