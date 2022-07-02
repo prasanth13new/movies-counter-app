@@ -29,22 +29,23 @@
   font-size: 18px;
 }
 
-.movie-list{
+.movie-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 16px;
 }
 
-.btn-like, .btn-dislike{
+.btn-like,
+.btn-dislike {
   font-size: 1.2rem;
 }
 
-.btn-like{
+.btn-like {
   margin-right: 0.5rem;
 }
 
-.inputbox{
+.inputbox {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -52,21 +53,31 @@
   align-content: center;
 }
 
-.not-found{
+.not-found {
   width: 100%;
   max-height: 700px;
   object-fit: contain;
 }
 
-.movie-detail-container{
+.movie-detail-container {
   max-width: 800px;
 }
 
-.add-movie-form{
+.add-movie-form {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   gap: 16px;
-  align-content: center;
+  /* align-content: center; */
   margin-bottom: 10px;
+}
+
+.router-container {
+  padding: 24px 12px;
+}
+
+.user-form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

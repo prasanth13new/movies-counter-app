@@ -11,8 +11,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export function Movie({ movie, id, deleteButton }) {
+export function Movie({ movie, id, deleteButton, editButton }) {
   // conditional styling
   const styles = {
     color: movie.rating > 8 ? "green" : "red",
@@ -28,34 +29,40 @@ export function Movie({ movie, id, deleteButton }) {
   const navigate = useNavigate();
 
   return (
-    <Card  className='movie-container'>
+    <Card className='movie-container'>
       <img className='movie-poster' src={movie.poster} alt={movie.name} />
       <CardContent>
-      <div className='movie-specs'>
-        <h2 className="movie-name">{movie.name}
+        <div className='movie-specs'>
+          <h2 className="movie-name">{movie.name}
 
-          {/* <button onClick={() => navigate("/movies/" + id)}>Info</button> */}
-          <IconButton onClick={() => navigate("/movies/" + id)} color="primary" aria-label="delete">
-            <InfoIcon />
-          </IconButton>
+            {/* <button onClick={() => navigate("/movies/" + id)}>Info</button> */}
+            <IconButton onClick={() => navigate("/movies/" + id)} color="primary" aria-label="delete">
+              <InfoIcon />
+            </IconButton>
 
-          {/* <button onClick={() => setShow(!show)}>Toogle summary</button> */}
-          <IconButton onClick={() => setShow(!show)} color="primary" aria-label="delete">
-            {show ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
-        </h2>
+            {/* <button onClick={() => setShow(!show)}>Toogle summary</button> */}
+            <IconButton onClick={() => setShow(!show)} color="primary" aria-label="delete">
+              {show ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </IconButton>
+          </h2>
 
-        <p style={styles} className='movie-rating'>⭐ {movie.rating}</p>
-      </div>
+          <p style={styles} className='movie-rating'>⭐ {movie.rating}</p>
+        </div>
 
-      {/* <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> */}
+        {/* <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> */}
 
-      {/* Conditional rendering */}
-      {show ? <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> : ""}
+        {/* Conditional rendering */}
+        {show ? <p style={summaryStyles} className='movie-summary'>{movie.summary}</p> : ""}
       </CardContent>
-      
+
       <CardActions>
-      <Counter /> {deleteButton}
+        <Counter />
+          <IconButton style={{"margin-left": "auto"}} aria-label="delete" color='error'>
+            {deleteButton}
+          </IconButton>
+          <IconButton aria-label="delete" color='secondary'>
+            {editButton}
+          </IconButton>
       </CardActions>
     </Card >
   );
